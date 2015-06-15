@@ -1,0 +1,122 @@
+{% extends "/sacrud/list.jinja2" %}
+
+{% block body %}
+  <form id="sacrud-form" class="sacrud-grid-content__left-inner" method="post" action="">
+    <div class="widget widget_type_single">
+      <div class="widget-title">
+        {{ _(table.verbose_name or table.__tablename__) }}
+      </div>
+      <div class="widget-toolbar">
+        <div class="toolbar clear-fix">
+          <div class="toolbar-button">
+            {% include "sacrud/actions/create.jinja2" %}
+            <div class="toolbar-button__item toolbar-button__item_type_delete">
+              <div class="toolbar-button__item-name">{{ _ps('Delete') }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="widget-content">
+        <div class="widget-tree" id="sacrud-tree"></div>
+      </div>
+    </div>
+    <input class="selected-action" type="hidden" value="0" name="selected_action" />
+    <div class="widget-toolbar">
+      <div class="toolbar clear-fix">
+        <div class="toolbar-button">
+          {% include "sacrud/actions/create.jinja2" %}
+          <div class="toolbar-button__item toolbar-button__item_type_delete">
+            <div class="toolbar-button__item-name">{{ _ps('Delete') }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <input class="selected-action" type="hidden" value="0" name="selected_action" />
+
+  {# <ul id="sacrud-tree-menu" class="dropdown-menu">
+    <li class="dropdown-menu__item">
+    <a href="#visible" class="dropdown-menu__item-link">
+      <i class="icon-eye-open"></i> Visible
+    </a>
+    </li>
+    <li class="dropdown-menu__item">
+    <a href="#edit" class="dropdown-menu__item-link">
+      <i class="icon-edit"></i> Edit
+    </a>
+    </li>
+    <li class="dropdown-menu__item">
+    <a href="#delete" class="dropdown-menu__item-link">
+      <i class="icon-remove"></i> Delete
+    </a>
+    </li>
+  </ul> #}
+{% endblock %}
+
+{% block extra_css %}
+{{ super() }}
+<link href="{{ request.static_url('ps_tree:static/css/__ps_tree.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block extra_js %}
+  {{ super() }}
+  <script type="text/javascript">
+    var data_url = "{{ request.route_url('ps_tree_get_tree', tablename=table.__tablename__) }}";
+
+    $(function() {
+      var data = $.ajax({"url": data_url, "async": false});
+      var $tree = $('#sacrud-tree');
+      $tree.tree({
+        data: data.responseJSON,
+        dragAndDrop: true,
+        useContextMenu: true,
+        autoOpen: 0,
+        closedIcon: '+',
+        saveState: 'ps_tree_' + '{{ table.name }}',
+
+        onCreateLi: function(node, $li) {
+          dom_element = $li.find('.jqtree-element');
+          dom_element.before(
+            '<input class="sacrud-grid-content-grid__body-item-checkbox"' +
+            "type='checkbox' name='selected_item' value='" + node.list_of_pk + "' />"
+          );
+        }
+      });
+
+      // bind 'tree.contextmenu' event
+      $tree.bind(
+        'tree.contextmenu',
+        function(event) {
+          // The clicked node is 'event.node'
+          var node = event.node;
+          alert("TODO: Make context menu there!");
+        }
+      );
+
+      // bind 'tree.click' event
+      $tree.bind(
+        'tree.click',
+        function(event) {
+          window.location = event.node.url_update;
+        }
+      );
+
+      // move node
+      $tree.bind('tree.move', function(event) {
+        event.preventDefault();
+        var url = "/ps_tree/{{ table.__tablename__ }}/move/" + event.move_info.moved_node.id + "/" +
+          event.move_info.position + "/" +
+          event.move_info.target_node.id + "/";
+        var status = $.ajax({"url": url, "async": false}).status;
+        if (status==200) {
+          event.move_info.do_move();
+          $tree.tree('loadDataFromUrl', data_url);
+        }
+      });
+
+
+    });
+  </script>
+  <script src="{{ request.static_url('ps_tree:static/js/tree.jquery.js') }}"></script>
+  <script src="{{ request.static_url('ps_tree:static/js/jquery.cookie.js') }}"></script>
+{% endblock %}
