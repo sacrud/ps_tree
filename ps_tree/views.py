@@ -1,4 +1,4 @@
-# from sacrud.common import pk_to_list
+import transaction
 from pyramid.view import view_config
 
 from pyramid_sacrud.security import (PYRAMID_SACRUD_DELETE,
@@ -47,19 +47,27 @@ def get_tree(request):
     renderer='json'
 )
 def page_move(request):
-    node = request.matchdict['node']
     method = request.matchdict['method']
+    node_id = request.matchdict['node_id']
+    target_id = request.matchdict['target_id']
     tablename = request.matchdict['tablename']
-    left_sibling = request.matchdict['leftsibling']
 
     table = get_pages_model(request.registry.settings, tablename)
-    pk = getattr(table, table.get_pk())
-    page = request.dbsession.query(table).filter(pk == node).one()
+    pk = table.get_pk_column()
+    page = request.dbsession.query(table).filter(pk == node_id).one()
+
+    print(page)
+    print(method)
+    print(target_id)
 
     if method == 'inside':
-        page.move_inside(left_sibling)
-    if method == 'after':
-        page.move_after(left_sibling)
-    if method == 'before':
-        page.move_before(left_sibling)
+        page.move_inside(target_id)
+    elif method == 'after':
+        page.move_after(target_id)
+    elif method == 'before':
+        page.move_before(target_id)
+    try:
+        request.dbsession.commit()
+    except AssertionError:
+        transaction.commit()
     return ''

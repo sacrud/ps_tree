@@ -1,12 +1,5 @@
 [
     {
-        "id": "0",
-        "in_menu": 1,
-        "name": "Default home page",
-        "slug": "/",
-        "visible": 1
-    },
-    {
         "description": "Hello Traversal World! Hello Traversal World! Hello Traversal World!",
         "id": "1",
         "in_menu": 1,

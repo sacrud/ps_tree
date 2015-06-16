@@ -37,6 +37,6 @@ def includeme(config):
     )
     config.add_route(
         PS_TREE_PAGE_MOVE,
-        '/ps_tree/{tablename}/move/{node}/{method}/{leftsibling}/'
+        '/ps_tree/{tablename}/move/{node_id}/{method}/{target_id}/'
     )
     config.scan('.views')
