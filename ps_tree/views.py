@@ -56,10 +56,6 @@ def page_move(request):
     pk = table.get_pk_column()
     page = request.dbsession.query(table).filter(pk == node_id).one()
 
-    print(page)
-    print(method)
-    print(target_id)
-
     if method == 'inside':
         page.move_inside(target_id)
     elif method == 'after':

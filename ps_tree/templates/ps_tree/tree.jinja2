@@ -111,10 +111,10 @@
         if (status==200) {
           event.move_info.do_move();
           $tree.tree('loadDataFromUrl', data_url);
+        } else {
+          alert("Error");
         }
       });
-
-
     });
   </script>
   <script src="{{ request.static_url('ps_tree:static/js/tree.jquery.js') }}"></script>
