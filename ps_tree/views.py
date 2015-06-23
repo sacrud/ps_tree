@@ -22,7 +22,16 @@ def get_pages_model(settings, tablename):
 )
 def get_tree(request):
     def fields(node):
-        node_list_of_pk = pk_to_list(node, True),
+        """
+        Return fields for node in jqTree.
+
+        For addition fields, add to you model method ``ps_tree_fields``.
+
+        ::
+
+            mynode.ps_tree_fields(request)
+        """
+        node_list_of_pk = pk_to_list(node, as_json=True),
         url_delete = request.route_url(
             PYRAMID_SACRUD_DELETE,
             table=node.__tablename__,
@@ -31,11 +40,12 @@ def get_tree(request):
             PYRAMID_SACRUD_UPDATE,
             table=node.__tablename__,
             pk=pk_to_list(node))
-        return {
+        node_fields = getattr(node, 'ps_tree_fields', lambda x: {})(request)
+        return dict({
             'url_delete': url_delete,
             'url_update': url_update,
-            'list_of_pk': node_list_of_pk,
-        }
+            'list_of_pk': node_list_of_pk
+        }.items() + node_fields.items())
     table = get_pages_model(request.registry.settings,
                             request.matchdict['tablename'])
     return table.get_tree(request.dbsession, json=True, json_fields=fields)

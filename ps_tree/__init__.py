@@ -22,7 +22,7 @@ def models_preparing(app):
     for model in models:
         if hasattr(model, 'sacrud_list_template'):
             continue
-        model.sacrud_list_template = 'ps_tree/tree.jinja2'
+        model.sacrud_list_template = 'ps_tree/redefineme.jinja2'
 
 
 def includeme(config):

@@ -3,6 +3,7 @@ import os
 
 import transaction
 from pyramid.config import Configurator
+from pyramid.response import Response
 from sqlalchemy import Column, Integer
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -18,6 +19,31 @@ class PageTree(Base, BaseSacrudMpttPage):
     __tablename__ = 'pages'
 
     id = Column(Integer, primary_key=True)
+
+    def ps_tree_fields(self, request):
+        url_visible = request.route_url(
+            'node_toggle_visible',
+            tablename=self.__tablename__,
+            id=self.id
+        )
+        return {
+            'visible': self.visible,
+            'url_visible': url_visible
+        }
+
+
+def node_toggle_visible(request):
+    id = request.matchdict['id']
+    tablename = request.matchdict['tablename']
+    settings = request.registry.settings
+    models = settings['ps_tree.models']
+    for model in models:
+        if model.__tablename__ == tablename:
+            break
+    node = DBSession.query(model).filter_by(id=id).one()
+    node.visible = not node.visible
+    transaction.commit()
+    return Response('OK')
 
 
 def sacrud_settings(config):
@@ -52,11 +78,17 @@ class Fixtures(object):
 
 def main(global_settings, **settings):
     config = Configurator(settings=settings)
+    config.include('pyramid_jinja2')
+    config.add_jinja2_search_path('ps_tree_example:templates')
+    config.add_static_view('ps_tree_example_static', 'static')
     config.include(database_settings)
 
     fixture = Fixtures(DBSession)
     fixture.add(PageTree, 'fixtures/pages.json')
     fixture.add(PageTree, 'fixtures/country.json')
+
+    config.add_route('node_toggle_visible', '/toggle/visible/{tablename}/{id}')
+    config.add_view(node_toggle_visible, route_name='node_toggle_visible')
 
     config.include(sacrud_settings)
     return config.make_wsgi_app()
