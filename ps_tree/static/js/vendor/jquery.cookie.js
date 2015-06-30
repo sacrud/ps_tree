@@ -2,16 +2,16 @@
  * jQuery Cookie Plugin v1.4.1
  * https://github.com/carhartl/jquery-cookie
  *
- * Copyright 2006, 2014 Klaus Hartl
+ * Copyright 2013 Klaus Hartl
  * Released under the MIT license
  */
 (function (factory) {
 	if (typeof define === 'function' && define.amd) {
-		// AMD (Register as an anonymous module)
+		// AMD
 		define(['jquery'], factory);
 	} else if (typeof exports === 'object') {
-		// Node/CommonJS
-		module.exports = factory(require('jquery'));
+		// CommonJS
+		factory(require('jquery'));
 	} else {
 		// Browser globals
 		factory(jQuery);
@@ -56,12 +56,12 @@
 
 		// Write
 
-		if (arguments.length > 1 && !$.isFunction(value)) {
+		if (value !== undefined && !$.isFunction(value)) {
 			options = $.extend({}, config.defaults, options);
 
 			if (typeof options.expires === 'number') {
 				var days = options.expires, t = options.expires = new Date();
-				t.setMilliseconds(t.getMilliseconds() + days * 864e+5);
+				t.setTime(+t + days * 864e+5);
 			}
 
 			return (document.cookie = [
@@ -75,20 +75,19 @@
 
 		// Read
 
-		var result = key ? undefined : {},
-			// To prevent the for loop in the first place assign an empty array
-			// in case there are no cookies at all. Also prevents odd result when
-			// calling $.cookie().
-			cookies = document.cookie ? document.cookie.split('; ') : [],
-			i = 0,
-			l = cookies.length;
+		var result = key ? undefined : {};
 
-		for (; i < l; i++) {
-			var parts = cookies[i].split('='),
-				name = decode(parts.shift()),
-				cookie = parts.join('=');
+		// To prevent the for loop in the first place assign an empty array
+		// in case there are no cookies at all. Also prevents odd result when
+		// calling $.cookie().
+		var cookies = document.cookie ? document.cookie.split('; ') : [];
 
-			if (key === name) {
+		for (var i = 0, l = cookies.length; i < l; i++) {
+			var parts = cookies[i].split('=');
+			var name = decode(parts.shift());
+			var cookie = parts.join('=');
+
+			if (key && key === name) {
 				// If second argument (value) is a function it's a converter...
 				result = read(cookie, value);
 				break;
@@ -106,6 +105,10 @@
 	config.defaults = {};
 
 	$.removeCookie = function (key, options) {
+		if ($.cookie(key) === undefined) {
+			return false;
+		}
+
 		// Must not alter options, thus extending a fresh object...
 		$.cookie(key, '', $.extend({}, options, { expires: -1 }));
 		return !$.cookie(key);

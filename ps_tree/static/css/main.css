@@ -1,0 +1,144 @@
+.jq-tree
+{
+  float: left;
+  margin: 0 0 0 30px;
+}
+.jqtree-selected > .jqtree-element,
+.jqtree-selected > .jqtree-element:hover {
+  background: none !important;
+}
+
+.jqtree-selected > .jqtree-element .jqtree-title
+{
+  background: #C6DAED;
+}
+.jqtree_common
+{
+  margin-bottom: 0 !important;
+}
+.jqtree-element
+{
+  padding: 0 0.5em 0 1em;
+  display: inline-block;
+  position: relative;
+  margin: 0 0 0.5em 0 !important;
+}
+  .jqtree-toggler
+  {
+    position: absolute;
+    left: -1.2em;
+    top: 0.35em;
+    font: 0.8em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    /*visibility: hidden;*/
+    color: #777 !important;
+  }
+  .jqtree-toggler:hover
+  {
+    color: #000 !important;
+  }
+  .jqtree-checkbox
+  {
+    left: 0;
+    top: 0.4em;
+    position: absolute;
+    z-index: 100;
+    padding: 1em;
+    cursor: pointer;
+  }
+  .jqtree-title
+  {
+    position: relative;
+    font: 0.95em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    padding: 0.3em 0.5em;
+    margin: 0 0 0 0 !important;
+  }
+  .jqtree-title:hover
+  {
+    background: #C6DAED;
+  }
+/*.jqtree-folder
+{
+  position: relative;
+}
+.jqtree-folder:after
+{
+  width: 10px;
+  height: 100%;
+  bottom: 1em;
+  position: absolute;
+  left: 0.5em;
+  content: '';
+  display: inline-block;
+  border-left: dotted 1px #ccc;
+}*/
+
+
+.jqtree-menu
+{
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: #fff;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: solid 1px #ccc;
+  display: none;
+  z-index: 1000;
+}
+  .jqtree-menu__item
+  {
+    padding: 0;
+    margin: 0;
+  }
+    .jqtree-menu__item-link
+    {
+      padding: 0.5em 1.5em 0.6em 1.5em;
+      display: block;
+      font: 0.95em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+      color: #000;
+      text-decoration: none;
+    }
+    .jqtree-menu__item-link:hover
+    {
+      background: #C6DAED;
+    }
+
+
+ul.jqtree-tree span.jqtree-border
+{
+  position: absolute;
+  left: -0.5em !important;
+  border: dashed 1px #777 !important;
+  border-radius: 0 !important;
+  height: 1.7em !important;
+  top: -0.2em !important;
+}
+
+ul.jqtree-tree li.jqtree-ghost span.jqtree-circle {
+  display: none !important;
+}
+ul.jqtree-tree li.jqtree-ghost span.jqtree-line {
+  background-color: transparent !important;
+  height: 1.7em !important;
+  position: relative !important;
+  left: 0.8em !important;
+}
+ul.jqtree-tree li.jqtree-ghost span.jqtree-line:after
+{
+  width: 80%;
+  content: ' ';
+  height: 1.4em;
+  font: 0.95em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+  color: #000;
+  display: inline-block;
+  padding: 0.2em 0 0.3em 0;
+  border: dashed 1px #777;
+  text-align: center;
+}
+span.jqtree-dragging {
+  opacity: 0.6;
+  padding: 0.4em 1.2em 0.5em 1.2em !important;
+  font: 0.95em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+  z-index: 10000;
+}

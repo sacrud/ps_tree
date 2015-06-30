@@ -1,0 +1,33 @@
+{
+  "name": "ps_tree",
+  "version": "0.0.1",
+  "homepage": "https://github.com/ITCase/ps_tree",
+  "authors": [
+    "ITCase <info@itcase.pro>"
+  ],
+  "moduleType": [
+    "amd",
+    "node"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jqtree": "~1.1.0",
+    "jquery.cookie": "~1.4.1",
+    "jqTreeContextMenu": "https://github.com/DavidUv/jqTreeContextMenu"
+  },
+  "overrides": {
+    "jqtree": {
+      "main": [
+        "tree.jquery.js",
+        "jqtree.css",
+        "jqtree-circle.png"
+      ]
+    },
+    "jquery": {
+      "main": "dist/jquery.js"
+    },
+    "jquery.cookie": {
+      "main": "jquery.cookie.js"
+    }
+  }
+}
