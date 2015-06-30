@@ -69,4 +69,7 @@ html_static_path = ['_static']
 htmlhelp_basename = 'ps_treedoc'
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'https://docs.python.org/': None}
+intersphinx_mapping = {
+    'https://docs.python.org/': None,
+    'http://sqlalchemy-mptt.readthedocs.org/en/master/': None
+}
