@@ -6,36 +6,16 @@
             <div class="widget-title">
                 {{ _(table.verbose_name or table.__tablename__) }}
             </div>
-            <div class="widget-toolbar">
-                <div class="toolbar clear-fix">
-                    <div class="toolbar-button">
-                        {% include "sacrud/actions/create.jinja2" %}
-                        <div class="toolbar-button__item toolbar-button__item_type_delete">
-                            <div class="toolbar-button__item-name">{{ _ps('Delete') }}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% include 'ps_tree/toolbar.jinja2' %}
             <div class="widget-content">
                 <div class="widget-tree clear-fix">
+                    <input id="selected_all_item" type="checkbox" /> Select all
                     <div id="tree" class="jq-tree"></div>
                 </div>
             </div>
-        </div>
-        <input class="selected-action" type="hidden" value="0" name="selected_action" />
-        <div class="widget-toolbar">
-            <div class="toolbar clear-fix">
-                <div class="toolbar-button">
-                    {% include "sacrud/actions/create.jinja2" %}
-                    <div class="toolbar-button__item toolbar-button__item_type_delete">
-                        <div class="toolbar-button__item-name">{{ _ps('Delete') }}</div>
-                    </div>
-                </div>
-            </div>
+            {% include 'ps_tree/toolbar.jinja2' %}
         </div>
     </form>
-    <input class="selected-action" type="hidden" value="0" name="selected_action" />
-
     <ul class="jqtree-menu" id="treeContextMenu">
         <li class="jqtree-menu__item">
             <a href="#delete" class="jqtree-menu__item-link">{{ _ps('Delete') }}</a>
