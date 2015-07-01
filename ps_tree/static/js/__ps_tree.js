@@ -39,17 +39,8 @@ require('./vendor/jquery.cookie.js');
     });
 
     $tree.jqTreeContextMenu($('#treeContextMenu'), {
-      'edit': function(node) {
-        console.log('Edit node: ' + node.name);
-      },
-      'visible': function(node) {
-        console.log('Visible node: ' + node.name);
-      },
       'delete': function(node) {
         console.log('Delete node: ' + node.name);
-      },
-      'add': function(node) {
-        console.log('Add node: ' + node.name);
       }
     });
 
@@ -81,6 +72,7 @@ require('./vendor/jquery.cookie.js');
     });
   });
 })(jQuery);
+
 },{"./vendor/jquery.cookie.js":2,"jquery":3}],2:[function(require,module,exports){
 /*!
  * jQuery Cookie Plugin v1.4.1

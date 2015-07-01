@@ -38,17 +38,8 @@ require('./vendor/jquery.cookie.js');
     });
 
     $tree.jqTreeContextMenu($('#treeContextMenu'), {
-      'edit': function(node) {
-        console.log('Edit node: ' + node.name);
-      },
-      'visible': function(node) {
-        console.log('Visible node: ' + node.name);
-      },
       'delete': function(node) {
         console.log('Delete node: ' + node.name);
-      },
-      'add': function(node) {
-        console.log('Add node: ' + node.name);
       }
     });
 
