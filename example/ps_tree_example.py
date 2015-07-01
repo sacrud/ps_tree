@@ -3,6 +3,7 @@ import os
 
 import transaction
 from pyramid.config import Configurator
+from pyramid.session import SignedCookieSessionFactory
 from sqlalchemy import Column, Integer
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -51,7 +52,11 @@ class Fixtures(object):
 
 
 def main(global_settings, **settings):
-    config = Configurator(settings=settings)
+    my_session_factory = SignedCookieSessionFactory('itsaseekreet')
+    config = Configurator(
+        session_factory=my_session_factory,
+        settings=settings
+    )
     config.include(database_settings)
 
     fixture = Fixtures(DBSession)

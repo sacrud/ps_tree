@@ -1,11 +1,13 @@
 {% extends "/sacrud/list.jinja2" %}
 
 {% block body %}
-    <form id="sacrud-form" class="sacrud-grid-content__left-inner" method="post" action="">
-        <div class="widget widget_type_single">
-            <div class="widget-title">
-                {{ _(table.verbose_name or table.__tablename__) }}
-            </div>
+    <div class="widget widget_type_single">
+        <div class="widget-title">
+            {{ _(table.verbose_name or table.__tablename__) }}
+        </div>
+        <form id="sacrud-form" class="sacrud-grid-content__left-inner" method="post"
+              action="{{ request.route_url(PYRAMID_SACRUD_MASS_ACTION,
+                                           table=table.__tablename__) }}">
             {% include 'ps_tree/toolbar.jinja2' %}
             <div class="widget-content">
                 <div class="widget-tree clear-fix">
@@ -14,8 +16,9 @@
                 </div>
             </div>
             {% include 'ps_tree/toolbar.jinja2' %}
-        </div>
-    </form>
+            <input class="selected-action" type="hidden" value="0" name="selected_action" />
+        </form>
+    </div>
     <ul class="jqtree-menu" id="treeContextMenu">
         <li class="jqtree-menu__item">
             <a href="#delete" class="jqtree-menu__item-link">{{ _ps('Delete') }}</a>
