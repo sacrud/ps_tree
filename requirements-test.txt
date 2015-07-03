@@ -1,3 +1,4 @@
 nose
+webtest
 coverage
 coveralls

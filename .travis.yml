@@ -23,10 +23,6 @@ python:
   - "3.3"
   - "3.4"
 
-install:
-  - pip install -r requirements.txt
-  - pip install -r requirements-test.txt
-
 script:
   # Nosetests
   - python setup.py nosetests
