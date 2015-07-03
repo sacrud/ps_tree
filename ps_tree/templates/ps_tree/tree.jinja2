@@ -10,13 +10,16 @@
                                            table=table.__tablename__) }}">
             {% include 'ps_tree/toolbar.jinja2' %}
             <div class="widget-content">
-                <div class="widget-tree clear-fix">
-                    <input id="selected_all_item" type="checkbox" /> Select all
-                    <div id="tree" class="jq-tree"></div>
+                <div class="widget-panel clear-fix">
+                    <label class="widget-panel__item" for="SelectAll">
+                        <input class="widget-panel__item-checkbox" id="SelectAll" type="checkbox" />
+                        <span class="widget-panel__item-text">Select all</span>
+                    </label>
+                    <input class="selected-action" type="hidden" value="0" name="selected_action" />
                 </div>
+                <div id="tree" class="jq-tree"></div>
             </div>
             {% include 'ps_tree/toolbar.jinja2' %}
-            <input class="selected-action" type="hidden" value="0" name="selected_action" />
         </form>
     </div>
     <ul class="jqtree-menu" id="treeContextMenu">

@@ -23,7 +23,7 @@
     "node": ">= 0.8.0"
   },
   "devDependencies": {
-   "autoprefixer-core": "^5.2.1",
+    "autoprefixer-core": "^5.2.1",
     "browser-sync": "^2.7.13",
     "browserify": "^10.2.4",
     "browserify-shim": "^3.8.9",

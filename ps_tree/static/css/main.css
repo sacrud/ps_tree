@@ -1,7 +1,7 @@
 .jq-tree
 {
   float: left;
-  margin: 0 0 0 30px;
+  margin: 10px 0 20px 30px;
 }
 .jqtree-selected > .jqtree-element,
 .jqtree-selected > .jqtree-element:hover {
@@ -29,7 +29,6 @@
     left: -1.2em;
     top: 0.35em;
     font: 0.8em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
-    /*visibility: hidden;*/
     color: #777 !important;
   }
   .jqtree-toggler:hover
@@ -45,6 +44,10 @@
     padding: 1em;
     cursor: pointer;
   }
+  .jqtree-checkbox:focus
+  {
+    outline: 0;
+  }
   .jqtree-title
   {
     position: relative;
@@ -56,21 +59,6 @@
   {
     background: #C6DAED;
   }
-/*.jqtree-folder
-{
-  position: relative;
-}
-.jqtree-folder:after
-{
-  width: 10px;
-  height: 100%;
-  bottom: 1em;
-  position: absolute;
-  left: 0.5em;
-  content: '';
-  display: inline-block;
-  border-left: dotted 1px #ccc;
-}*/
 
 
 .jqtree-menu
