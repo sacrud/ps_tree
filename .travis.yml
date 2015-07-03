@@ -28,4 +28,5 @@ script:
   - python setup.py nosetests
 
 after_success:
-  coveralls
+  - pip install coveralls
+  - coveralls
