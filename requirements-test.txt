@@ -2,3 +2,5 @@ nose
 webtest
 coverage
 coveralls
+pyramid_pages
+sqlalchemy_mptt
