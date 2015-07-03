@@ -23,6 +23,7 @@ setup(
     description='JQuery tree structure in pyramid_sacrud or anywhere else.',
     long_description=read('README.rst'),
     install_requires=read('requirements.txt'),
+    tests_require=read('requirements.txt') + read('requirements-test.txt'),
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',

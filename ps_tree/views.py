@@ -8,7 +8,7 @@ from sacrud.common import pk_to_list
 from . import CONFIG_MODELS, PS_TREE_GET_TREE, PS_TREE_PAGE_MOVE
 
 
-def get_pages_model(settings, tablename):
+def get_model(settings, tablename):
     for model in settings[CONFIG_MODELS]:
         if model.__tablename__ == tablename:
             return model
@@ -36,8 +36,8 @@ def get_tree(request):
             'url_update': url_update,
             'list_of_pk': node_list_of_pk,
         }
-    table = get_pages_model(request.registry.settings,
-                            request.matchdict['tablename'])
+    table = get_model(request.registry.settings,
+                      request.matchdict['tablename'])
     return table.get_tree(request.dbsession, json=True, json_fields=fields)
 
 
@@ -52,7 +52,7 @@ def page_move(request):
     target_id = request.matchdict['target_id']
     tablename = request.matchdict['tablename']
 
-    table = get_pages_model(request.registry.settings, tablename)
+    table = get_model(request.registry.settings, tablename)
     pk = table.get_pk_column()
     page = request.dbsession.query(table).filter(pk == node_id).one()
 

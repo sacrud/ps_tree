@@ -1,0 +1,5 @@
+nose
+webtest
+coverage
+pyramid_pages
+sqlalchemy_mptt
