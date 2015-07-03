@@ -5,23 +5,70 @@
 # Copyright © 2015 uralbash <root@uralbash.ru>
 #
 # Distributed under terms of the MIT license.
+
+"""
+Base classes for tests
+http://www.sontek.net/blog/2011/12/01/writing_tests_for_pyramid_and_sqlalchemy.html
+"""
 import unittest
 
-from ps_tree.views import get_model
+from pyramid import testing
+from sqlalchemy import engine_from_config
+from sqlalchemy.orm import sessionmaker
+from webtest import TestApp
+from sqlalchemy_mptt import mptt_sessionmaker
+
+import imp
+imp.load_source('ps_tree_example', 'example/ps_tree_example.py')
+
+from ps_tree_example import Base, DBSession, main, PageTree  # noqa
+
+settings = {
+    'sqlalchemy.url': 'sqlite:///test.sqlite',
+    'ps_tree.models': (PageTree, )
+}
 
 
-class TestCommon(unittest.TestCase):
+class BaseTestCase(unittest.TestCase):
 
-    def test_get_tree_models(self):
-        class Foo:
-            __tablename__ = 'foo'
+    @classmethod
+    def setUpClass(cls):
+        cls.engine = engine_from_config(settings, prefix='sqlalchemy.')
+        cls.DBSession = mptt_sessionmaker(sessionmaker())
 
-        class Bar:
-            __tablename__ = 'bar'
+    def setUp(self):
+        # bind an individual Session to the connection
+        self.dbsession = self.DBSession(bind=self.engine)
+        self.create_db()
 
-        settings = {
-            'ps_tree.models': (Foo, Bar)
-        }
-        self.assertEqual(get_model(settings, 'foo'), Foo)
-        self.assertEqual(get_model(settings, 'bar'), Bar)
-        self.assertEqual(get_model(settings, 'non'), None)
+    def tearDown(self):
+        # rollback - everything that happened with the
+        # Session above (including calls to commit())
+        # is rolled back.
+        testing.tearDown()
+        self.drop_db()
+        self.dbsession.close()
+
+    def drop_db(self):
+        Base.metadata.drop_all(bind=self.engine)
+        self.dbsession.commit()
+
+    def create_db(self):
+        Base.metadata.create_all(bind=self.engine)
+        self.dbsession.commit()
+
+
+class UnitTestBase(BaseTestCase):
+
+    def setUp(self):
+        self.request = testing.DummyRequest()
+        self.config = testing.setUp(request=self.request)
+        super(UnitTestBase, self).setUp()
+
+
+class IntegrationTestBase(BaseTestCase):
+
+    def setUp(self):
+        self.app = TestApp(main({}, **settings))
+        self.config = testing.setUp()
+        super(IntegrationTestBase, self).setUp()
