@@ -21,7 +21,7 @@ from sqlalchemy_mptt import mptt_sessionmaker
 import imp
 imp.load_source('ps_tree_example', 'example/ps_tree_example.py')
 
-from ps_tree_example import Base, DBSession, main, PageTree  # noqa
+from ps_tree_example import Base, DBSession, main, PageTree, Fixtures  # noqa
 
 settings = {
     'sqlalchemy.url': 'sqlite:///test.sqlite',
@@ -55,6 +55,12 @@ class BaseTestCase(unittest.TestCase):
 
     def create_db(self):
         Base.metadata.create_all(bind=self.engine)
+        self.dbsession.commit()
+
+    def initialize_db(self):
+        fixture = Fixtures(self.dbsession)
+        fixture.add(PageTree, 'fixtures/pages.json')
+        fixture.add(PageTree, 'fixtures/country.json')
         self.dbsession.commit()
 
 
