@@ -14,4 +14,4 @@ or
    $ python setup.py develop
    $ pserve development.ini --reload
 
-and goto http://localhost:6543/admin/
+and goto http://localhost:6543/

@@ -9,6 +9,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
 from zope.sqlalchemy import ZopeTransactionExtension
 
+import pyramid_sacrud
 from pyramid_pages.models import BaseSacrudMpttPage
 
 Base = declarative_base()
@@ -64,6 +65,7 @@ def main(global_settings, **settings):
     fixture.add(PageTree, 'fixtures/country.json')
 
     config.include(sacrud_settings)
+    config.add_route(pyramid_sacrud.security.PYRAMID_SACRUD_HOME, '/')
     return config.make_wsgi_app()
 
 
