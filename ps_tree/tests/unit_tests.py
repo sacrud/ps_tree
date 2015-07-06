@@ -34,3 +34,29 @@ class TestPageMove(UnitTestBase):
         self._init_request('foo_method', 1, 2, 'pages')
         with self.assertRaises(HTTPInternalServerError):
             page_move(self.request)
+
+    def test_move_inside(self):
+        self.initialize_db()
+        self.assertEqual(self.node(200).parent_id, 100)
+        self._init_request('inside', 200, 1, 'pages')
+        response = page_move(self.request)
+        self.assertEqual(self.node(200).parent_id, 1)
+        self.assertEqual(response, '')
+
+    def test_move_after(self):
+        self.initialize_db()
+        self.assertEqual(self.node(500).leftsibling_in_level().id, 200)
+        self._init_request('after', 200, 500, 'pages')
+        response = page_move(self.request)
+        self.assertEqual(self.node(200).leftsibling_in_level().id, 500)
+        self.assertEqual(self.node(500).leftsibling_in_level().id, 101)
+        self.assertEqual(response, '')
+
+    def test_move_before(self):
+        self.initialize_db()
+        self.assertEqual(self.node(500).leftsibling_in_level().id, 200)
+        self._init_request('before', 500, 200, 'pages')
+        response = page_move(self.request)
+        self.assertEqual(self.node(200).leftsibling_in_level().id, 500)
+        self.assertEqual(self.node(500).leftsibling_in_level().id, 101)
+        self.assertEqual(response, '')

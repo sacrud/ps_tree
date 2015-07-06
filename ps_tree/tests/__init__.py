@@ -76,6 +76,9 @@ class BaseTestCase(unittest.TestCase):
         fixture.add(PageTree, 'fixtures/country.json')
         self.dbsession.commit()
 
+    def node(self, id):
+        return self.dbsession.query(PageTree).filter_by(id=id).one()
+
 
 class UnitTestBase(BaseTestCase):
 
