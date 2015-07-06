@@ -73,3 +73,10 @@ intersphinx_mapping = {
     'https://docs.python.org/': None,
     'http://sqlalchemy-mptt.readthedocs.org/en/master/': None
 }
+
+html_theme_options = {
+    'travis_button': True,
+    'github_button': True,
+    'github_user': 'ITCase',
+    'github_repo': 'ps_tree',
+}
