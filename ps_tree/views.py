@@ -1,4 +1,5 @@
 import transaction
+from pyramid.httpexceptions import HTTPInternalServerError
 from pyramid.view import view_config
 
 from pyramid_sacrud.security import (PYRAMID_SACRUD_DELETE,
@@ -62,6 +63,8 @@ def page_move(request):
         page.move_after(target_id)
     elif method == 'before':
         page.move_before(target_id)
+    else:
+        raise HTTPInternalServerError("Unavailable method {}".format(method))
     try:
         request.dbsession.commit()
     except AssertionError:

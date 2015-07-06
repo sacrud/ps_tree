@@ -1,38 +1,15 @@
-from sqlalchemy import Column, Integer
+from pyramid.httpexceptions import HTTPInternalServerError
 
-from ps_tree.views import get_tree
-from pyramid_sacrud.security import (PYRAMID_SACRUD_DELETE,
-                                     PYRAMID_SACRUD_UPDATE)
-from sqlalchemy_mptt.mixins import BaseNestedSets
+from ps_tree.views import get_tree, page_move
 
-from . import Base, PageTree, UnitTestBase
+from . import UnitTestBase
 from .tree import base_tree
-
-prefix = 'admin'
-
-
-class Foo(Base, BaseNestedSets):
-
-    __tablename__ = 'foo'
-
-    id = Column(Integer, primary_key=True)
 
 
 class TestGetTree(UnitTestBase):
 
-    def _init_request(self, tablename='foo'):
-        self.request.matchdict['tablename'] = tablename
-        self.request.registry.settings['ps_tree.models'] = (Foo, PageTree)
-        self.request.dbsession = self.dbsession
-
-    def _init_config(self):
-        self.config.add_route(PYRAMID_SACRUD_DELETE,
-                              prefix + '{table}/delete/*pk')
-        self.config.add_route(PYRAMID_SACRUD_UPDATE,
-                              prefix + '{table}/update/*pk')
-
     def test_get_empty_tree(self):
-        self._init_request()
+        self._init_request('foo')
         tree = get_tree(self.request)
         self.assertEqual(tree, [])
 
@@ -42,3 +19,18 @@ class TestGetTree(UnitTestBase):
         self._init_request('pages')
         tree = get_tree(self.request)
         self.assertEqual(tree, base_tree)
+
+
+class TestPageMove(UnitTestBase):
+
+    def _init_request(self, method, node_id, target_id, tablename):
+        super(TestPageMove, self)._init_request(tablename)
+        self.request.matchdict['method'] = method
+        self.request.matchdict['node_id'] = node_id
+        self.request.matchdict['target_id'] = target_id
+
+    def test_bad_move_method(self):
+        self.initialize_db()
+        self._init_request('foo_method', 1, 2, 'pages')
+        with self.assertRaises(HTTPInternalServerError):
+            page_move(self.request)
