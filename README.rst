@@ -8,6 +8,9 @@ ps_tree
 as tree. This works fine with models from `sqlalchemy_mptt
 <https://github.com/ITCase/sqlalchemy_mptt/>`_.
 
+.. image:: https://cdn.rawgit.com/ITCase/ps_tree/master/docs/source/_static/tree.png
+   :alt: tree
+
 Look how easy it is to use:
 
 .. code-block:: python

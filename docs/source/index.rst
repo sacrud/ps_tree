@@ -6,10 +6,18 @@
 ps_tree
 =======
 
+.. image:: _static/tree.png
+    :alt: tree
+    :align: right
+
 `ps_tree` is extension for `pyramid_sacrud
 <https://github.com/ITCase/pyramid_sacrud/>`_ which displays a list of records
 as tree. This works fine with models from `sqlalchemy_mptt
 <https://github.com/ITCase/sqlalchemy_mptt/>`_.
+
+.. raw:: html
+
+   <br clear="both"/>
 
 Look how easy it is to use:
 
