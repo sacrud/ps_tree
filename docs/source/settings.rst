@@ -26,4 +26,4 @@ You can redefine template of tree in ``youproject/templates/ps_tree/tree.jinja2`
 
 .. literalinclude:: ../../ps_tree/templates/ps_tree/tree.jinja2
    :caption: Default template ``tree.jinja2``
-   :language: html
+   :language: html+jinja
