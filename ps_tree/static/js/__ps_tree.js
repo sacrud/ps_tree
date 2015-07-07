@@ -87,9 +87,6 @@ require('./vendor/jquery.cookie.js');
         } else {
           $(selectAllButton).removeAttr('checked');
         }
-        console.log(selectedNodes);
-        console.log(allNodes);
-
       })
       .on('tree.move', function(event){
         event.preventDefault();
@@ -133,7 +130,11 @@ require('./vendor/jquery.cookie.js');
 
     $tree.jqTreeContextMenu($('#treeContextMenu'), {
       'delete': function(node) {
-        console.log('Delete node: ' + node.name);
+        $tree.tree('addToSelection', node);
+        $tree.find('.jqtree-selected .jqtree-checkbox').prop('checked', 'checked');
+        var popup = window.popup;
+        popup.showDeletePopup();
+        //console.log('Delete node: ' + node.name);
       }
     });
 
