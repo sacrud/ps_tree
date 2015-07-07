@@ -11,7 +11,7 @@ def read(name):
 
 setup(
     name='ps_tree',
-    version='0.0.1',
+    version='0.0.1.post0',
     url='http://github.com/ITCase/ps_tree/',
     author='Svintsov Dmitry',
     author_email='sacrud@uralbash.ru',
