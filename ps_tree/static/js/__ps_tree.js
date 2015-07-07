@@ -71,12 +71,23 @@ require('./vendor/jquery.cookie.js');
 
           if($tree.tree('isNodeSelected', node)) {
             selectedNodes -= 1;
-            $(this).prop('checked', false);
             $tree.tree('removeFromSelection', node);
+            $(this).prop('checked', false);
+            $tree.find('.jqtree-selected .jqtree-checkbox').prop('checked', false);
+            node.iterate(function(child_node) {
+              $tree.tree('removeFromSelection', child_node);
+              return true;
+            });
+
           } else {
             selectedNodes += 1;
-            $(this).prop('checked', true);
             $tree.tree('addToSelection', node);
+            $(this).prop('checked', true);
+            $tree.find('.jqtree-selected .jqtree-checkbox').prop('checked', 'checked');
+            node.iterate(function(child_node) {
+              $tree.tree('addToSelection', child_node);
+              return true;
+            });
           }
         } else {
           window.location = event.node.url_update;
@@ -87,6 +98,15 @@ require('./vendor/jquery.cookie.js');
         } else {
           $(selectAllButton).removeAttr('checked');
         }
+      })
+      .on('tree.contextmenu', function(event) {
+          var node = event.node;
+          $tree.tree('addToSelection', node);
+          node.iterate(function(child_node) {
+            $tree.tree('addToSelection', child_node);
+            return true;
+          });
+          $tree.find('.jqtree-selected .jqtree-checkbox').prop('checked', 'checked');
       })
       .on('tree.move', function(event){
         event.preventDefault();
@@ -131,10 +151,13 @@ require('./vendor/jquery.cookie.js');
     $tree.jqTreeContextMenu($('#treeContextMenu'), {
       'delete': function(node) {
         $tree.tree('addToSelection', node);
+        node.iterate(function(child_node) {
+          $tree.tree('addToSelection', child_node);
+          return true;
+        });
         $tree.find('.jqtree-selected .jqtree-checkbox').prop('checked', 'checked');
         var popup = window.popup;
         popup.showDeletePopup();
-        //console.log('Delete node: ' + node.name);
       }
     });
 

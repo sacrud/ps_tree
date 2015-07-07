@@ -9,6 +9,7 @@
     // * Make sure the useContextMenu option is set in jqTree, either complain or set it automatically
     // * Make menu fade in/out
     //
+    var $tree = $('#tree');
     var self = this;
     var $el = this;
 
@@ -80,6 +81,13 @@
         $(document).unbind('click.jqtreecontextmenu');
         $el.unbind('tree.click.jqtreecontextmenu');
         $menuEl.hide();
+        $tree.find('.jqtree-selected .jqtree-checkbox').prop('checked', false);
+        $tree.tree('removeFromSelection', event.node);
+        event.node.iterate(function(child_node) {
+          $tree.tree('removeFromSelection', child_node);
+          $tree.find('.jqtree-selected .jqtree-checkbox').prop('checked', false);
+          return true;
+        });
       }
       // Make it possible to dismiss context menu by clicking somewhere in the document.
       $(document).bind('click.jqtreecontextmenu', function () {
