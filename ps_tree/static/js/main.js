@@ -2,8 +2,6 @@
 
 if (typeof $ === 'undefined') { require('jquery'); }
 
-require('./vendor/jquery.cookie.js');
-
 (function($){
 
   $(window).load(function(){
@@ -19,7 +17,6 @@ require('./vendor/jquery.cookie.js');
       'url': DATA_URL,
       'async': false
     });
-
 
     $tree
       .on('tree.init', function(){
@@ -90,6 +87,7 @@ require('./vendor/jquery.cookie.js');
           }
         } else {
           window.location = event.node.url_update;
+          localStorage.clear();
         }
 
         if(selectedNodes === allNodes){

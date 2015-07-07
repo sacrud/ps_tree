@@ -12,7 +12,6 @@
   "license": "MIT",
   "dependencies": {
     "jqtree": "~1.1.0",
-    "jquery.cookie": "~1.4.1",
     "jqTreeContextMenu": "https://github.com/DavidUv/jqTreeContextMenu"
   },
   "overrides": {
