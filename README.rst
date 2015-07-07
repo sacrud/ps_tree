@@ -8,10 +8,12 @@ ps_tree
 as tree. This works fine with models from `sqlalchemy_mptt
 <https://github.com/ITCase/sqlalchemy_mptt/>`_.
 
+.. image:: https://cdn.rawgit.com/ITCase/ps_tree/master/docs/source/_static/tree.png
+   :alt: tree
+
 Look how easy it is to use:
 
 .. code-block:: python
-   :caption: Create model
 
    from pyramid_pages.models import BaseSacrudMpttPage
 
@@ -24,7 +26,6 @@ Look how easy it is to use:
        id = Column(Integer, primary_key=True)
 
 .. code-block:: python
-   :caption: Settings for pyramid app
 
    config.include('ps_tree')
    config.registry.settings['ps_tree.models'] = (PageTree, )

@@ -29,7 +29,6 @@ setup(
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
-        'Natural Language :: English',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         "Programming Language :: Python :: 2.6",
