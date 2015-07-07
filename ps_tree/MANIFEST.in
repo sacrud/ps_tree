@@ -1,0 +1,5 @@
+recursive-include ps_tree/templates *.ico *.png *.css *.gif *.jpg *.pt *.txt *.mak *.mako *.jinja2 *.js *.html *.xml
+recursive-include ps_tree/static *.ico *.png *.css *.gif *.jpg *.pt *.txt *.mak *.mako *.jinja2 *.js *.html *.xml
+include requirements.txt
+include requirements-test.txt
+include README.rst
