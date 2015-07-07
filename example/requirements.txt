@@ -1,4 +1,3 @@
 pyramid
 pyramid_sacrud
 pyramid_pages
-pyramid_debugtoolbar
